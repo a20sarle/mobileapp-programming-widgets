@@ -31,5 +31,12 @@
             android:textStyle="bold"
             android:background="#6200ED"
             android:textColor="#fff"/>
+
+        <ImageView
+            android:id="@+id/id_snowboarder"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:contentDescription="Old school snowboarder"
+            app:srcCompat="@drawable/snowboard" />
     </LinearLayout>
 </LinearLayout>
