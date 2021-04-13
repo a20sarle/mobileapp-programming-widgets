@@ -1,42 +1,57 @@
 
-# Rapport
+# Rapport för uppg. 3: Widgets
 
-**Skriv din rapport här!**
-
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Till en början lades en LinearLayout till i activity_main.xml genom koden nedan. Taggarna <LinearLayout> definierar layouten och koden inom öppningstaggen positionerar de _widgets_ som ligger innanför. I efterhand lades ytterligare LinearLayout:s till för att ändra _layouten_ än mer.
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+        <EditText
+            .../>
+
+        <Button
+            .../>
+
+        <ImageView
+            ... />
+</LinearLayout>
+```
+
+Nästa steg var att lägga till de widgets som syns i kodrutan ovan, dvs. EditText, Button och ImageView. Dessa tre lades till med var sina självstängande taggar innehållande de respektive elementens styling, id och ev. källa.
+
+
+Sambandet mellan widgeten Button och EditText skapades genom koden nedan och gör så att den text användaren skrivit in sedan visas i en tillfällig ruta (se bild nedan). För att faktiskt kunna använda de olika _widget:sen_ som lagts till var en tvungen att lägga till olika _imports_.
+```
+import android.widget.EditText;
+import android.widget.Button;
+
+import android.widget.Toast;
+import android.view.View;
+```
+De två sista _importsen_ var nödvändiga för att få funktionaliteten av koden nedan. `<MyButton>` och `<editText>` definierades innan kodblocket ovan.
+
+```
+MyButton = (Button) findViewById(R.id.id_button);//get id of button
+MyButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if (editText.getText().toString().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter the Data", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "You wrote:  " + editText.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
-}
+});
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Koden ovan säger att om användaren inte skrivit in något så ska texten "Enter the Data" visas medan det är användarens egna text som ska visas om hen skrivit in något i textfältet.Detta görs med hjälp av en funktion som håller en if-sats.
 
-![](android.png)
-
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+![](assignment3.png)
